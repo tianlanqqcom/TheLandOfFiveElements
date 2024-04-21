@@ -1,0 +1,20 @@
+\00章节1
+
+P1:ABCDEFG
+\01
+P2:HIJK
+#L \03
+#M \04
+#N \05章节2
+#O \06GameFramework.GamePlay.MyGameMode:ShowMouse
+\02
+P3:PQ
+P4:RSTUVW
+P4:XYZ
+\07
+
+\00章节2
+章节2:这是章节2
+\07
+
+\10章节1

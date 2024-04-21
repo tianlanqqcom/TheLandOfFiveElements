@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daab5d515dadb604788150ae3a8e444d, type: 3}
+  m_Name: TestInventory1
+  m_EditorClassIdentifier: 
+  UID: 0
+  Level: 4
+  Type: 0
+  ImagePath: test1.png
+  Name:
+    Source: 0
+    RawString: 
+    MessageDictionary: 
+    MessageKey: 
+  EffectDescription:
+    Source: 0
+    RawString: 
+    MessageDictionary: 
+    MessageKey: 
+  Description:
+    Source: 0
+    RawString: 
+    MessageDictionary: 
+    MessageKey: 
+  CanBeStacked: 1
+  CanBeUsedInBag: 1
+  DestoryAfterUse: 0
+  UseFuncs:
+    m_PersistentCalls:
+      m_Calls: []
