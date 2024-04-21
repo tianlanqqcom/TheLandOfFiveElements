@@ -8,7 +8,7 @@
  * tianlan  24/2/26 FixedStringDrawer
  */
 
-using GameFramework.Core;
+using Script.GameFramework.Core;
 using UnityEditor;
 using UnityEngine;
 
