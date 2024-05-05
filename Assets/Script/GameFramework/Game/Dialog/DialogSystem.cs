@@ -23,7 +23,7 @@ namespace Script.GameFramework.Game.Dialog
         /// <summary>
         /// 当前的对话
         /// </summary>
-        public Script.GameFramework.Game.Dialog.Dialog NowDialog = null;
+        public Dialog NowDialog = null;
 
         /// <summary>
         /// 开始一段对话

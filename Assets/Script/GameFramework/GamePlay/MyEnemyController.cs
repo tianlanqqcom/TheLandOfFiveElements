@@ -52,7 +52,7 @@ namespace Script.GameFramework.GamePlay
         void Update()
         {
             // 如果生命小于0，暂停行动
-            if (playerState.HP <= 0)
+            if (playerState.NowHp <= 0)
             {
                 behaviorTree.enabled = false;
             }

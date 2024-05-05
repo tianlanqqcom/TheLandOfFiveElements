@@ -28,11 +28,13 @@ namespace Script.GameFramework.GamePlay
     [RequireComponent(typeof(MyPlayerState), typeof(CharacterController))]
     public class MyPlayerController : MonoBehaviour
     {
-        [Header("物体绑定列表")]
         /// <summary>
         /// 当前玩家对应的第三人称相机
         /// </summary>
+        [Header("物体绑定列表")]
+
         [Tooltip("当前玩家对应的第三人称相机")]
+
         public Camera MyCamera;
 
         /// <summary>

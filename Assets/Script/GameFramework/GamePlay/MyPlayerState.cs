@@ -19,12 +19,12 @@ namespace Script.GameFramework.GamePlay
         /// <summary>
         /// 最大生命值
         /// </summary>
-        public int MaxHP { get; private set; } = 100;
+        public int MaxHp { get; private set; } = 100;
 
         /// <summary>
         /// 当前生命值
         /// </summary>
-        public int HP { get; private set; }
+        public int NowHp { get; private set; }
 
         /// <summary>
         /// 玩家名称
@@ -37,25 +37,19 @@ namespace Script.GameFramework.GamePlay
         public string UserID { get; private set; }
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            HP = MaxHP;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            NowHp = MaxHp;
         }
 
         /// <summary>
         /// 设置最大生命值
         /// </summary>
-        /// <param name="newMaxHP">新的最大生命值</param>
-        public void SetMaxHealthPoint(int newMaxHP)
+        /// <param name="newMaxHp">新的最大生命值</param>
+        public void SetMaxHealthPoint(int newMaxHp)
         {
-            MaxHP = newMaxHP;
-            HP = MathLibrary.Clamp(HP, 0, MaxHP);
+            MaxHp = newMaxHp;
+            NowHp = MathLibrary.Clamp(NowHp, 0, MaxHp);
         }
 
         /// <summary>
@@ -64,8 +58,8 @@ namespace Script.GameFramework.GamePlay
         /// <param name="damage">造成的伤害，当恢复生命时该值为负数</param>
         public void ChangeHealthPoint(int damage)
         {
-            HP -= damage;
-            HP = MathLibrary.Clamp(HP, 0, MaxHP);
+            NowHp -= damage;
+            NowHp = MathLibrary.Clamp(NowHp, 0, MaxHp);
         }
 
         /// <summary>
@@ -73,7 +67,7 @@ namespace Script.GameFramework.GamePlay
         /// </summary>
         public void ResetHealth()
         {
-            HP = MaxHP;
+            NowHp = MaxHp;
         }
     }
 }

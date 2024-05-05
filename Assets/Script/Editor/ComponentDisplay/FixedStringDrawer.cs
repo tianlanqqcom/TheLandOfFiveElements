@@ -12,55 +12,58 @@ using Script.GameFramework.Core;
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(FixedString))]
-public class FixedStringDrawer : PropertyDrawer
+namespace Script.Editor.ComponentDisplay
 {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(FixedString))]
+    public class FixedStringDrawer : PropertyDrawer
     {
-        EditorGUI.BeginProperty(position, label, property);
-
-        float lineHeight = EditorGUIUtility.singleLineHeight;
-        float spacing = 2f;
-
-        Rect labelRect = new Rect(position.x, position.y, position.width, lineHeight);
-        EditorGUI.LabelField(labelRect, label, EditorStyles.boldLabel);
-
-        Rect sourceRect = new Rect(position.x + 20, position.y + lineHeight, position.width - 20, lineHeight);
-        EditorGUI.PropertyField(sourceRect, property.FindPropertyRelative("Source"));
-
-        var source = (MessageLanguageSourceType)property.FindPropertyRelative("Source").enumValueIndex;
-
-        Rect contentRect = new Rect(position.x + 20, position.y + lineHeight * 2 + spacing, position.width - 20, lineHeight);
-
-        if (source == MessageLanguageSourceType.UseLanguageManager)
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.PropertyField(contentRect, property.FindPropertyRelative("MessageDictionary"));
-            contentRect.y += lineHeight + spacing;
+            EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUI.PropertyField(contentRect, property.FindPropertyRelative("MessageKey"));
+            float lineHeight = EditorGUIUtility.singleLineHeight;
+            float spacing = 2f;
+
+            Rect labelRect = new Rect(position.x, position.y, position.width, lineHeight);
+            EditorGUI.LabelField(labelRect, label, EditorStyles.boldLabel);
+
+            Rect sourceRect = new Rect(position.x + 20, position.y + lineHeight, position.width - 20, lineHeight);
+            EditorGUI.PropertyField(sourceRect, property.FindPropertyRelative("source"));
+
+            var source = (MessageLanguageSourceType)property.FindPropertyRelative("source").enumValueIndex;
+
+            Rect contentRect = new Rect(position.x + 20, position.y + lineHeight * 2 + spacing, position.width - 20, lineHeight);
+
+            if (source == MessageLanguageSourceType.UseLanguageManager)
+            {
+                EditorGUI.PropertyField(contentRect, property.FindPropertyRelative("messageDictionary"));
+                contentRect.y += lineHeight + spacing;
+
+                EditorGUI.PropertyField(contentRect, property.FindPropertyRelative("messageKey"));
+            }
+            else
+            {
+                EditorGUI.PropertyField(contentRect, property.FindPropertyRelative("rawString"));
+            }
+
+            EditorGUI.EndProperty();
         }
-        else
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            EditorGUI.PropertyField(contentRect, property.FindPropertyRelative("RawString"));
-        }
+            float lineHeight = EditorGUIUtility.singleLineHeight;
+            float spacing = 2f;
 
-        EditorGUI.EndProperty();
-    }
+            var source = (MessageLanguageSourceType)property.FindPropertyRelative("source").enumValueIndex;
 
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        float lineHeight = EditorGUIUtility.singleLineHeight;
-        float spacing = 2f;
-
-        var source = (MessageLanguageSourceType)property.FindPropertyRelative("Source").enumValueIndex;
-
-        if (source == MessageLanguageSourceType.UseLanguageManager)
-        {
-            return 4 * (lineHeight + spacing);
-        }
-        else
-        {
-            return 3 * (lineHeight + spacing);
+            if (source == MessageLanguageSourceType.UseLanguageManager)
+            {
+                return 4 * (lineHeight + spacing);
+            }
+            else
+            {
+                return 3 * (lineHeight + spacing);
+            }
         }
     }
 }
