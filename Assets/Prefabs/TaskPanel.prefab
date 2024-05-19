@@ -331,10 +331,10 @@ MonoBehaviour:
   AwardContentRoot: {fileID: 5902881269139438272}
   TaskAwardPrefab: {fileID: 7653821698007718930, guid: 723da388b22526d42a8050db6de1ec9e, type: 3}
   TipMessage:
-    Source: 1
-    RawString: 
-    MessageDictionary: TaskType
-    MessageKey: Tip
+    source: 1
+    rawString: 
+    messageDictionary: TaskType
+    messageKey: Tip
 --- !u!1 &5902881267945287835
 GameObject:
   m_ObjectHideFlags: 0

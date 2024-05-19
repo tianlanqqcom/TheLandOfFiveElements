@@ -93,7 +93,7 @@ namespace Script.GameFramework.Test
         void Start()
         {
             // InputHandler.Instance.BindKeyInput(this, KeyCode.LeftAlt);
-            InputSystem.BindKey(KeyCode.LeftAlt, InputSystem.InputEventType.Pressed, () =>
+            InputSystem.Instance?.BindKey(KeyCode.LeftAlt, InputSystem.InputEventType.Pressed, () =>
             { 
                 if(MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game && !MyGameMode.Instance.IsMouseShown)
                 {
@@ -101,7 +101,7 @@ namespace Script.GameFramework.Test
                 }
             });
 
-            InputSystem.BindKey(KeyCode.LeftAlt, InputSystem.InputEventType.Released, () =>
+            InputSystem.Instance?.BindKey(KeyCode.LeftAlt, InputSystem.InputEventType.Released, () =>
             {
                 if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game && MyGameMode.Instance.IsMouseShown)
                 {

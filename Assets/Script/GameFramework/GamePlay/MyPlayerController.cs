@@ -164,8 +164,8 @@ namespace Script.GameFramework.GamePlay
             //InputHandler.Instance.BindMouseMoveInput(this);
             //InputHandler.Instance.BindMouseWheelInput(this);
             //InputHandler.Instance.BindMouseInput(this, 0);
-            InputSystem.BindMouseMove(MouseMove_NormalGame);
-            InputSystem.BindMouseWheel(MouseWheel_NormalGame);
+            InputSystem.Instance?.BindMouseMove(MouseMove_NormalGame);
+            InputSystem.Instance?.BindMouseWheel(MouseWheel_NormalGame);
 
             RegisterAnimatorControlStates();
         }
@@ -316,7 +316,7 @@ namespace Script.GameFramework.GamePlay
         /// </summary>
         private void RegisterAnimatorControlStates()
         {
-            InputSystem.BindKey(KeyCode.W, InputSystem.InputEventType.Pressed, () =>
+            InputSystem.Instance?.BindKey(KeyCode.W, InputSystem.InputEventType.Pressed, () =>
             {
                 if (EnableAnim)
                 {
@@ -326,7 +326,7 @@ namespace Script.GameFramework.GamePlay
                 nowWalkingDirection.y += 1.0f;
             });
 
-            InputSystem.BindKey(KeyCode.W, InputSystem.InputEventType.Released, () =>
+            InputSystem.Instance?.BindKey(KeyCode.W, InputSystem.InputEventType.Released, () =>
             {
                 if (EnableAnim)
                 {

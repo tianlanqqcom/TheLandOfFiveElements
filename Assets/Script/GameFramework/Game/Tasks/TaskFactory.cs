@@ -9,6 +9,7 @@
  */
 
 using Script.GameFramework.Game.Tasks.ConcreteTasks;
+using Script.LFE.Game.Tasks.ConcreteTasks;
 
 namespace Script.GameFramework.Game.Tasks
 {
@@ -21,6 +22,10 @@ namespace Script.GameFramework.Game.Tasks
             if(taskID == 1000)
             {
                 task = new TestGotoTargetPositionTask();
+            }
+            else if (taskID == 1001)
+            {
+                task = new TutorialTask();
             }
             else
             {

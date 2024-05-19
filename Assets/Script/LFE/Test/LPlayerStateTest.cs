@@ -11,7 +11,7 @@ namespace Script.LFE.Test
         // Start is called before the first frame update
         private void Start()
         {
-            InputSystem.BindKey(KeyCode.K, InputSystem.InputEventType.Pressed, () =>
+            InputSystem.Instance?.BindKey(KeyCode.K, InputSystem.InputEventType.Pressed, () =>
             {
                 gameObject.GetComponent<LPlayerState>().MoveToNextElement();
                 Debug.Log(gameObject.GetComponent<LPlayerState>().NowHp);

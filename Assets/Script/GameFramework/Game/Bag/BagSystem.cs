@@ -54,8 +54,8 @@ namespace Script.GameFramework.Game.Bag
 
         private void Start()
         {
-            InputSystem.BindKey(KeyCode.B, InputSystem.InputEventType.Pressed, ShowBag_KeyB);
-            InputSystem.BindKey(KeyCode.Escape, InputSystem.InputEventType.Pressed, HideBag_KeyESC);
+            InputSystem.Instance?.BindKey(KeyCode.B, InputSystem.InputEventType.Pressed, ShowBag_KeyB);
+            InputSystem.Instance?.BindKey(KeyCode.Escape, InputSystem.InputEventType.Pressed, HideBag_KeyESC);
 
             InitBag();
             // RegisterInput();

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace UnityStandardAssets.Utility
 {
+    [Obsolete("Obsolete")]
     public class SimpleActivatorMenu : MonoBehaviour
     {
         // An incredibly simple menu which, when given references
