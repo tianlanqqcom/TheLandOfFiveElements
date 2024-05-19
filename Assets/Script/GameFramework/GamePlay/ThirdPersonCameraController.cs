@@ -4,16 +4,18 @@
  * Bug:1.当出现碰撞时，如果碰撞点和角色十分近，会导致穿模，
  *       而如果往碰撞点方向偏移一段距离，则可能导致过度偏移从而导致镜头永远不会再拍到角色。
  * Author: tianlan
- * Last update at 24/3/14    21：35
- * 
+ * Last update at 24/5/14   22:48
+ *
  * Update Records:
  * tianlan  24/3/14 从MyPlayerController中拆分出相机控制代码
+ * tianlan  24/5/14 添加碰撞检测控制选项
  */
 
 using System.Collections;
 using Script.GameFramework.Core;
 using Script.GameFramework.Game;
 using UnityEngine;
+using Logger = Script.GameFramework.Log.Logger;
 
 namespace Script.GameFramework.GamePlay
 {
@@ -22,29 +24,24 @@ namespace Script.GameFramework.GamePlay
         /// <summary>
         /// 当前玩家对应的第三人称相机
         /// </summary>
-        [Tooltip("当前玩家对应的第三人称相机")]
-        public Camera MyCamera;
+        [Tooltip("当前玩家对应的第三人称相机")] public Camera MyCamera;
 
         /// <summary>
         /// 相机父物体的Transform，方便控制相机旋转
         /// </summary>
-        [Tooltip("相机父物体的Transform")]
-        public Transform CameraParentTransform;
+        [Tooltip("相机父物体的Transform")] public Transform CameraParentTransform;
 
         /// <summary>
         /// 角色Mesh位于的物体
         /// </summary>
-        [Tooltip("角色Mesh位于的物体")]
-        public GameObject CharacterMesh;
+        [Tooltip("角色Mesh位于的物体")] public GameObject CharacterMesh;
 
         /// <summary>
         /// 镜头偏移
         /// </summary>
-        [Tooltip("镜头偏移")]
-        public Vector3 CameraOffset;
+        [Tooltip("镜头偏移")] public Vector3 CameraOffset;
 
         [Header("灵敏度和角度设置")]
-
         /// <summary>
         /// 镜头旋转灵敏度
         /// </summary>
@@ -54,47 +51,41 @@ namespace Script.GameFramework.GamePlay
         /// <summary>
         /// 镜头缩放灵敏度
         /// </summary>
-        [Tooltip("镜头缩放灵敏度")]
-        public float CameraScaleSensity = 10.0f;
+        [Tooltip("镜头缩放灵敏度")] public float CameraScaleSensity = 10.0f;
 
         /// <summary>
         /// 镜头最小FOV
         /// </summary>
-        [Tooltip("镜头最小FOV")]
-        public float CameraMinFov = 25.0f;
+        [Tooltip("镜头最小FOV")] public float CameraMinFov = 25.0f;
 
         /// <summary>
         /// 镜头最大FOV
         /// </summary>
-        [Tooltip("镜头最大FOV")]
-        public float CameraMaxFov = 75.0f;
+        [Tooltip("镜头最大FOV")] public float CameraMaxFov = 75.0f;
 
         /// <summary>
         /// 镜头最小俯仰角,注意是从上往下看
         /// </summary>
-        [Tooltip("镜头最小俯仰角,注意是从上往下看")]
-        public float CameraMinRotateX = -80.0f;
+        [Tooltip("镜头最小俯仰角,注意是从上往下看")] public float CameraMinRotateX = -80.0f;
 
         /// <summary>
         /// 镜头最大俯仰角,注意是从下往上看
         /// </summary>
-        [Tooltip("镜头最大俯仰角,注意是从下往上看")]
-        public float CameraMaxRotateX = 20.0f;
+        [Tooltip("镜头最大俯仰角,注意是从下往上看")] public float CameraMaxRotateX = 20.0f;
 
         /// <summary>
         /// 镜头距离
         /// </summary>
-        [Tooltip("镜头距离")]
-        public float CameraDistance = 10.0f;
+        [Tooltip("镜头距离")] public float CameraDistance = 10.0f;
 
         /// <summary>
         /// 镜头恢复时间
         /// </summary>
-        [Tooltip("镜头恢复时间")]
-        public float CameraRefreshTime = 1.0f;
+        [Tooltip("镜头恢复时间")] public float CameraRefreshTime = 1.0f;
 
-        [Header("移动参数")]
-        public float MoveSpeed = 1.0f;
+        [Header("移动参数")] public float MoveSpeed = 1.0f;
+
+        [Header("是否启用碰撞检测")] public bool bEnableCollisionDetect = true;
 
         /// <summary>
         /// 当前X旋转角度
@@ -125,18 +116,12 @@ namespace Script.GameFramework.GamePlay
                 MyCamera = Camera.main;
             }
 
-            InputSystem.BindMouseMove(MouseMove_NormalGame);
-            InputSystem.BindMouseWheel(MouseWheel_NormalGame);
+            InputSystem.Instance?.BindMouseMove(MouseMove_NormalGame);
+            InputSystem.Instance?.BindMouseWheel(MouseWheel_NormalGame);
 
-            InputSystem.BindMouse(0, InputSystem.InputEventType.Pressed, () =>
-            {
-                isMouseLeftButtonDown = true;
-            });
+            InputSystem.Instance?.BindMouse(0, InputSystem.InputEventType.Pressed, () => { isMouseLeftButtonDown = true; });
 
-            InputSystem.BindMouse(0, InputSystem.InputEventType.Released, () =>
-            {
-                isMouseLeftButtonDown = false;
-            });
+            InputSystem.Instance?.BindMouse(0, InputSystem.InputEventType.Released, () => { isMouseLeftButtonDown = false; });
 
             // Force Camera at a distance of CameraDistance.
             StartCoroutine(GraduallyMoveCameraBack(CameraDistance));
@@ -145,25 +130,29 @@ namespace Script.GameFramework.GamePlay
         // Update is called once per frame
         void Update()
         {
-            CameraCollisionUpdate();
         }
 
         private void LateUpdate()
         {
             // Always keep cameraParentTransform the same position with the CharacterMesh
             CameraParentTransform.position = CharacterMesh.transform.position + CameraOffset;
+            if (bEnableCollisionDetect)
+            {
+                CameraCollisionUpdate();
+            }
         }
 
         private void MouseMove_NormalGame(float deltaX, float daltaY)
         {
             // 普通游戏模式且鼠标未显示
-            if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game && !MyGameMode.Instance.IsMouseShown)
+            if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game &&
+                !MyGameMode.Instance.IsMouseShown)
             {
                 CameraRotateUpdate(deltaX, daltaY);
             }
             // 对话模式且鼠标显示且鼠标左键按下
-            else if(MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Dialog && 
-                MyGameMode.Instance.IsMouseShown && isMouseLeftButtonDown)
+            else if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Dialog &&
+                     MyGameMode.Instance.IsMouseShown && isMouseLeftButtonDown)
             {
                 CameraRotateUpdate(deltaX, daltaY);
             }
@@ -172,7 +161,8 @@ namespace Script.GameFramework.GamePlay
         private void MouseWheel_NormalGame(float delta)
         {
             // 普通游戏模式且鼠标未显示
-            if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game && !MyGameMode.Instance.IsMouseShown)
+            if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game &&
+                !MyGameMode.Instance.IsMouseShown)
             {
                 MyCamera.fieldOfView = MathLibrary.Clamp(
                     MyCamera.fieldOfView - delta * CameraScaleSensity,
@@ -188,6 +178,13 @@ namespace Script.GameFramework.GamePlay
         /// <param name="deltaY">在Y方向上的旋转值</param>
         private void CameraRotateUpdate(float deltaX, float deltaY)
         {
+            if (!CameraParentTransform)
+            {
+                Logger.Log("TP_CameraCtrller::Cam_Rotate_Upd CameraParentTransform is null. Try destory.");
+                Destroy(gameObject);
+                return;
+            }
+
             nowRotateY -= deltaX * CameraRotateSensity;
             nowRotateX += deltaY * CameraRotateSensity;
             nowRotateX = MathLibrary.Clamp(nowRotateX, CameraMinRotateX, CameraMaxRotateX);
@@ -211,12 +208,12 @@ namespace Script.GameFramework.GamePlay
             }
             else
             {
-                float nowDistance = Vector3.Distance(CameraParentTransform.transform.position, MyCamera.transform.position);
+                float nowDistance =
+                    Vector3.Distance(CameraParentTransform.transform.position, MyCamera.transform.position);
                 if (nowDistance < CameraDistance && !isRefreshingCamera)
                 {
                     StartCoroutine(GraduallyMoveCameraBack(nowDistance));
                 }
-
             }
         }
 
@@ -224,7 +221,8 @@ namespace Script.GameFramework.GamePlay
         {
             float deltaDistance = (CameraDistance - nowDistance) / CameraRefreshTime;
             isRefreshingCamera = true;
-            while (Vector3.Distance(CameraParentTransform.transform.position, MyCamera.transform.position) < CameraDistance)
+            while (Vector3.Distance(CameraParentTransform.transform.position, MyCamera.transform.position) <
+                   CameraDistance)
             {
                 if (!isRefreshingCamera)
                 {
@@ -242,4 +240,3 @@ namespace Script.GameFramework.GamePlay
         }
     }
 }
-

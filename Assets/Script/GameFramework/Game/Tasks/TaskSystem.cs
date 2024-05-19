@@ -12,10 +12,11 @@
 using System.Collections.Generic;
 using Script.GameFramework.Core;
 using Script.GameFramework.Log;
+using Script.GameFramework.UI;
 
 namespace Script.GameFramework.Game.Tasks
 {
-    public class TaskSystem : SimpleSingleton<TaskSystem>
+    public class TaskSystem : GlobalSingleton<TaskSystem>
     {
         /// <summary>
         /// 任意任务ID
@@ -46,6 +47,9 @@ namespace Script.GameFramework.Game.Tasks
 
             Task task = TaskFactory.CreateTask(taskID);
             NowActiveTasks.Add(task);
+            
+            TaskSystemUI.Instance.NowSelectedTask = task;
+            TaskPositionTrackViewUI.Instance.SetTraceTaskID(taskID);
         }
 
         /// <summary>

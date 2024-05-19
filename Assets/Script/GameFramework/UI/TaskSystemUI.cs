@@ -93,7 +93,7 @@ namespace Script.GameFramework.UI
         private void Start()
         {
             // 绑定输入
-            InputSystem.BindKey(KeyCode.T, InputSystem.InputEventType.Pressed, () =>
+            InputSystem.Instance?.BindKey(KeyCode.T, InputSystem.InputEventType.Pressed, () =>
             {
                 if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game)
                 {
@@ -101,7 +101,7 @@ namespace Script.GameFramework.UI
                 }
             });
 
-            InputSystem.BindKey(KeyCode.Escape, InputSystem.InputEventType.Pressed, () =>
+            InputSystem.Instance?.BindKey(KeyCode.Escape, InputSystem.InputEventType.Pressed, () =>
             {
                 if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Pure_UI && IsTaskUIShown)
                 {
@@ -110,7 +110,7 @@ namespace Script.GameFramework.UI
             });
 
             // Test
-            TaskSystem.Instance.AddTask(1000);
+            // TaskSystem.Instance.AddTask(1000);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Script.GameFramework.UI
         /// </summary>
         public void OpenTaskSystemUI()
         {
-            if (UIRoot == null)
+            if (!UIRoot)
             {
                 Logger.LogError("TaskSystemUI:OpenTaskSystemUI() UI Root is not assigned or has been destoryed.");
                 return;

@@ -144,9 +144,9 @@ namespace Script.GameFramework.UI
         private void Start()
         {
             // Bind input
-            InputSystem.BindKey(KeyCode.F, InputSystem.InputEventType.Pressed, InteractiveWithTargetItem);
-            InputSystem.BindKey(KeyCode.UpArrow, InputSystem.InputEventType.Pressed, PointerUp);
-            InputSystem.BindKey(KeyCode.DownArrow, InputSystem.InputEventType.Pressed, PointerDown);
+            InputSystem.Instance?.BindKey(KeyCode.F, InputSystem.InputEventType.Pressed, InteractiveWithTargetItem);
+            InputSystem.Instance?.BindKey(KeyCode.UpArrow, InputSystem.InputEventType.Pressed, PointerUp);
+            InputSystem.Instance?.BindKey(KeyCode.DownArrow, InputSystem.InputEventType.Pressed, PointerDown);
 
             if (BachgroundImage != null)
             {

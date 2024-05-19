@@ -79,7 +79,7 @@ namespace Script.GameFramework.Test
         {
             // 绑定ESC键
             // InputHandler.Instance.BindKeyInputAction(this, KeyCode.Escape);
-            InputSystem.BindKey(KeyCode.Escape, InputSystem.InputEventType.Pressed, ExitGame);
+            InputSystem.Instance?.BindKey(KeyCode.Escape, InputSystem.InputEventType.Pressed, ExitGame);
         }
 
         private void ExitGame()

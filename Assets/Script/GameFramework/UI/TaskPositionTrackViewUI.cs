@@ -3,9 +3,10 @@
  * Description: 任务点追踪视图
  * Author: tianlan
  * Last update at 24/3/15   19:45
- * 
+ *
  * Update Records:
  * tianlan  24/3/15 新建文件
+ * tianlan  24/5/18 添加公有方法，显示UI和隐藏UI
  */
 
 using Script.GameFramework.Core;
@@ -21,20 +22,17 @@ namespace Script.GameFramework.UI
         /// <summary>
         /// 目标摄像机
         /// </summary>
-        [Tooltip("目标摄像机")]
-        public Camera TagetCamera;
+        [Tooltip("目标摄像机")] public Camera TagetCamera;
 
         /// <summary>
         /// 椭圆长轴
         /// </summary>
-        [Tooltip("椭圆长轴")]
-        public float SemiMajorAxis = .4f;
+        [Tooltip("椭圆长轴")] public float SemiMajorAxis = .4f;
 
         /// <summary>
         /// 椭圆短轴
         /// </summary>
-        [Tooltip("椭圆短轴")]
-        public float SemiMinorAxis = .3f;
+        [Tooltip("椭圆短轴")] public float SemiMinorAxis = .3f;
 
         /// <summary>
         /// 当前正在追踪的任务
@@ -45,8 +43,7 @@ namespace Script.GameFramework.UI
         /// <summary>
         /// 跟踪UI根物体
         /// </summary>
-        [Tooltip("跟踪UI根物体")]
-        public GameObject TraceUI;
+        [Tooltip("跟踪UI根物体")] public GameObject TraceUI;
 
         /// <summary>
         /// UI根物体RectTransform缓存
@@ -68,6 +65,22 @@ namespace Script.GameFramework.UI
             isTraceUIEnable = true;
         }
 
+        /// <summary>
+        /// 显示UI
+        /// </summary>
+        public void ShowTraceUI()
+        {
+            isTraceUIEnable = true;
+        }
+
+        /// <summary>
+        /// 隐藏UI
+        /// </summary>
+        public void HideTraceUI()
+        {
+            isTraceUIEnable = false;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -81,9 +94,9 @@ namespace Script.GameFramework.UI
             rectTransformForTraceUI = TraceUI.GetComponent<RectTransform>();
 
             // Bind input, switch enable type of TraceUI 
-            InputSystem.BindKey(KeyCode.V, InputSystem.InputEventType.Pressed, () =>
+            InputSystem.Instance?.BindKey(KeyCode.V, InputSystem.InputEventType.Pressed, () =>
             {
-                if(MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game)
+                if (MyGameMode.Instance.NowWorkingMode == MyGameMode.WorkingMode.Normal_Game)
                 {
                     isTraceUIEnable = !isTraceUIEnable;
                 }
@@ -94,7 +107,7 @@ namespace Script.GameFramework.UI
         void Update()
         {
             // If not in Normai_Game
-            if(MyGameMode.Instance.NowWorkingMode != MyGameMode.WorkingMode.Normal_Game)
+            if (MyGameMode.Instance.NowWorkingMode != MyGameMode.WorkingMode.Normal_Game)
             {
                 // If UI is active, disable
                 if (TraceUI.activeSelf)
@@ -107,12 +120,13 @@ namespace Script.GameFramework.UI
             }
 
             // If UI isn't enable
-            if(!isTraceUIEnable)
+            if (!isTraceUIEnable)
             {
                 if (TraceUI.activeSelf)
                 {
                     TraceUI.SetActive(false);
                 }
+
                 return;
             }
 
@@ -123,7 +137,7 @@ namespace Script.GameFramework.UI
             Task TraceTask = TaskSystem.Instance.GetTargetTask(TraceTaskID);
 
             // If success
-            if(TraceTask != null)
+            if (TraceTask != null)
             {
                 if (!TraceUI.activeSelf)
                 {
@@ -131,9 +145,9 @@ namespace Script.GameFramework.UI
                 }
 
                 Vector3 taskPosition = TraceTask.NowTaskNode.GetPosition();
-                
+
                 // If in ellipse, set UI to the point in screen
-                if(IsPointInsideEllipse(taskPosition, SemiMinorAxis, SemiMinorAxis, out Vector3 pointInViewport))
+                if (IsPointInsideEllipse(taskPosition, SemiMinorAxis, SemiMinorAxis, out Vector3 pointInViewport))
                 {
                     // 设置anchorMin和anchorMax属性
                     rectTransformForTraceUI.anchorMin = new Vector2(pointInViewport.x, pointInViewport.y);
@@ -144,9 +158,9 @@ namespace Script.GameFramework.UI
                 // set UI to the edge of ellipse
                 else
                 {
-                    float angle = Mathf.Atan((pointInViewport.y -.5f) / (pointInViewport.x - .5f));
+                    float angle = Mathf.Atan((pointInViewport.y - .5f) / (pointInViewport.x - .5f));
 
-                    if(pointInViewport.x < .5f)
+                    if (pointInViewport.x < .5f)
                     {
                         angle += Mathf.PI;
                     }
@@ -213,4 +227,3 @@ namespace Script.GameFramework.UI
         }
     }
 }
-
