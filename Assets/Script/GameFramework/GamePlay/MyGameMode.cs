@@ -251,7 +251,8 @@ namespace Script.GameFramework.GamePlay
                 Logger.LogError("MyGameMode::RestartPlayerAt Failed to find player.");
                 return;
             }
-
+            
+            player.SetActive(false);
             if (uiTime > .0f)
             {
                 if (_coroutine != null)
@@ -263,7 +264,8 @@ namespace Script.GameFramework.GamePlay
                 _coroutine = StartCoroutine(ShowDeathUI(uiTime));
             }
 
-            player.transform.position = pos;
+            StartCoroutine(SetPlayerTransform(pos, player, uiTime / 2));
+            player.GetComponent<MyPlayerState>()?.ResetHealth();
         }
 
         /// <summary>
@@ -281,6 +283,7 @@ namespace Script.GameFramework.GamePlay
                 return;
             }
 
+            player.SetActive(false);
             if (uiTime > .0f)
             {
                 if (_coroutine != null)
@@ -292,8 +295,23 @@ namespace Script.GameFramework.GamePlay
                 _coroutine = StartCoroutine(ShowDeathUI(uiTime));
             }
 
+            StartCoroutine(SetPlayerTransform(pos, rotation, player, uiTime / 2));
+            player.GetComponent<MyPlayerState>()?.ResetHealth();
+        }
+
+        private IEnumerator SetPlayerTransform(Vector3 pos, GameObject player, float time)
+        {
+            yield return new WaitForSeconds(time);
+            player.transform.position = pos;
+            player.SetActive(true);
+        }
+        
+        private IEnumerator SetPlayerTransform(Vector3 pos, Quaternion rotation, GameObject player, float time)
+        {
+            yield return new WaitForSeconds(time);
             player.transform.position = pos;
             player.transform.rotation = rotation;
+            player.SetActive(true);
         }
 
         /// <summary>

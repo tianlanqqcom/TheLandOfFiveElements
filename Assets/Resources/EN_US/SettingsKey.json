@@ -1,0 +1,16 @@
+﻿{
+  "Settings": "Settings",
+
+  "Quality": "Quality",
+  "Q_Low": "Low",
+  "Q_Mid": "Medium",
+  "Q_High": "High",
+  "Q_Ex": "Highest",
+
+  "Language": "Language",
+  "ZH_CN": "中文",
+  "EN_US": "English",
+
+  "Save": "Save",
+  "Quit": "Quit"
+}

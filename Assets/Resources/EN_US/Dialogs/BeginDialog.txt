@@ -1,0 +1,4 @@
+﻿\00Begin
+Mysterious voice: When you wake up from your slumber, you find yourself in a strange place.
+Mysterious voice: There are many stars here. A voice in your mind tells you that only by collecting all the stars can you return to your original world.
+\10Begin

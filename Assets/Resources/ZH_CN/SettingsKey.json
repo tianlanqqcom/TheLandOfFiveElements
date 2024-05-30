@@ -1,0 +1,16 @@
+﻿{
+  "Settings": "设置",
+  
+  "Quality": "画面质量",
+  "Q_Low": "低",
+  "Q_Mid": "中",
+  "Q_High": "高",
+  "Q_Ex": "极致",
+  
+  "Language": "语言",
+  "ZH_CN": "中文",
+  "EN_US": "English",
+  
+  "Save": "保存设置",
+  "Quit": "退出游戏"
+}

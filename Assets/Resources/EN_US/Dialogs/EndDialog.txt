@@ -1,0 +1,3 @@
+﻿\00End
+Mysterious Voice:Congratulations on collecting all the stars! Quickly pass through the portal!
+\10End

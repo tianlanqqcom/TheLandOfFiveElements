@@ -18,7 +18,8 @@ namespace Script.LFE.GamePlay
     public class LPlayerState : GameFramework.GamePlay.MyPlayerState
     {
         // Now Element & Judge
-        #region ElementJudge 
+
+        #region ElementJudge
 
         /// <summary>
         /// 玩家当前属性
@@ -109,6 +110,12 @@ namespace Script.LFE.GamePlay
         }
 
         #endregion
-        
+
+        public int NowStarCount { get; private set; } = 0;
+
+        public void SelectStar()
+        {
+            NowStarCount++;
+        }
     }
 }
