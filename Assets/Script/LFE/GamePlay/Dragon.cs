@@ -15,6 +15,8 @@ namespace Script.LFE.GamePlay
 
         public float fireDistance = 20.0f;
 
+        public Vector3 fireDirection = new (-1, 0, 0);
+
         // Start is called before the first frame update
         private void Start()
         {
@@ -32,7 +34,7 @@ namespace Script.LFE.GamePlay
 
                 if (fireBall)
                 {
-                    fireBall.speed = new Vector3(-1, 0, 0) * fireSpeed;
+                    fireBall.speed = fireDirection.normalized * fireSpeed;
                     // fireBall.speed = Vector3.zero;
                     fireBall.flyDistance = fireDistance;
                     fireBall.damage = Random.Range(1, 20);
