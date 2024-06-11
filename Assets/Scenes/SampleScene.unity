@@ -5302,9 +5302,37 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 252745760}
+    - target: {fileID: 7050524337285539913, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524337285539913, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524337285539913, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524337348074572, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524338135621167, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524338135621167, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7050524338198293980, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
       propertyPath: m_Name
       value: TaskSystemUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524338198293980, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7050524338198293981, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
       propertyPath: m_Pivot.x
@@ -5388,6 +5416,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7050524338198293981, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524339134115961, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050524339146421815, guid: de6ef04af8aa992439ceeb58f3fa430a, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
