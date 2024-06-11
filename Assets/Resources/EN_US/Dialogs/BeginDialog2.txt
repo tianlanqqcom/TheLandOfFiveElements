@@ -1,0 +1,4 @@
+﻿\00Begin
+Mysterious voice: It seems that you won't be able to go back that easily. What appears before you is a new scene.
+Mysterious voice: Wait, why is there such a deep pit ahead?
+\10Begin

@@ -64,7 +64,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             }
 #if !MOBILE_INPUT
 			// walk speed multiplier
-	        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
+            // if left shift is not pressed, calculate normal walk speed
+            m_Move *= 0.5f;
+            
+            // if left shift pressed, resume speed
+	        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 2.0f;
 #endif
 
             // pass all parameters to the character control script

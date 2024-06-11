@@ -15,6 +15,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
+		[SerializeField] bool m_EnableAirMove = true;
+		[SerializeField] float m_AirSpeed = 0.1f;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -161,6 +163,23 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Rigidbody.AddForce(extraGravityForce);
 
 			m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+			
+			// If A/D Pressed, Apply Move in Air.
+			if (m_EnableAirMove)
+			{
+				float airSpeed = 0;
+				if (Input.GetKey(KeyCode.A))
+				{
+					airSpeed -= m_AirSpeed;
+				}
+
+				if (Input.GetKey(KeyCode.D))
+				{
+					airSpeed += m_AirSpeed;
+				}
+
+				gameObject.transform.Translate(airSpeed, 0, 0);
+			}
 		}
 
 

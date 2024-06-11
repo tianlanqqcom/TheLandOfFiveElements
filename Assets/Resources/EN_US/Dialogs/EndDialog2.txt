@@ -1,0 +1,3 @@
+﻿\00End
+Mysterious Voice:Collected all the stars! The portal has appeared!
+\10End

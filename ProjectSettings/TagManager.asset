@@ -7,6 +7,7 @@ TagManager:
   - Device
   - Fire
   - Monster
+  - Restart
   layers:
   - Default
   - TransparentFX

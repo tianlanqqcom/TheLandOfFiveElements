@@ -14,7 +14,7 @@ namespace Script.LFE.GamePlay
         private Vector3 _targetPosition; // 目标位置
         private bool _movingToB = true; // 当前移动方向
         private AudioSource _audioSource;
-        
+
 
         private void Start()
         {
@@ -36,7 +36,10 @@ namespace Script.LFE.GamePlay
                 if (transform.position == _targetPosition)
                 {
                     // Play audio
-                    _audioSource?.PlayOneShot(liftArrive);
+                    if (liftArrive)
+                    {
+                        _audioSource?.PlayOneShot(liftArrive);
+                    }
                     
                     // 等待指定的时间
                     yield return new WaitForSeconds(waitTime);
