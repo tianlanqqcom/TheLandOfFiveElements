@@ -1,0 +1,3 @@
+﻿\00Begin
+Me: It feels so high. Where am I going?
+\10Begin

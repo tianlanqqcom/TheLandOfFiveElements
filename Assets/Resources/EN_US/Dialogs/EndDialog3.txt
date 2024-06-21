@@ -1,0 +1,4 @@
+﻿\00Begin
+Me: Right there!
+Me: The way home, I'm coming!
+\10Begin

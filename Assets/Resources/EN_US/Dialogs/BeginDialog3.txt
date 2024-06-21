@@ -1,0 +1,6 @@
+﻿\00Begin
+Mysterious voice: It's getting dark.
+Mysterious voice: Fortunately, you have this torch.
+Mysterious voice: But I had better to find our way back quickly.
+Mysterious voice: Starlight will guide you on the way.
+\10Begin
