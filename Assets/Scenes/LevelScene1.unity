@@ -6352,7 +6352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 608260746}
   m_Layer: 0
-  m_Name: Restar2
+  m_Name: Restart2
   m_TagString: Restart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
